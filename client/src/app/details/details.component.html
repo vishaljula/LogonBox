@@ -6,11 +6,39 @@
 			</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
-			<mat-list>
-				<mat-list-item>IP Address: {{apiService.details.ipAddr}}</mat-list-item>
-				<mat-list-item>Subnet: {{apiService.details.subnet}}</mat-list-item>
-				<mat-list-item>Gateway: {{apiService.details.networkGateway}}</mat-list-item>
-			</mat-list>
+			<form>
+				<mat-form-field>
+					<input 
+						[(ngModel)]="apiService.details.ipAddr" 
+						name="ipaddr" 
+						matInput 
+						placeholder="IP Address"
+						autocomplete="ipaddr"
+					>
+				</mat-form-field>
+				<br>
+				<mat-form-field>
+					<input 
+						[(ngModel)]="apiService.details.subnet" 
+						name="subnet" 
+						matInput 
+						placeholder="Subnet"
+						autocomplete="subnet"
+					>
+				</mat-form-field>
+				<br>
+				<mat-form-field>
+					<input 
+						[(ngModel)]="apiService.details.networkGateway" 
+						name="gateway" 
+						matInput 
+						placeholder="Network Gateway"
+						autocomplete="gateway"
+					>
+				</mat-form-field>
+				<br>
+				<button (click)="updateDetails()" mat-raised-button color="primary">Update</button>
+			</form>
 		</mat-card-content>
 	</mat-card>
 </div>

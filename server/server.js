@@ -9,7 +9,8 @@ var app = express();
 var database = {
 	loginData: {
 		userName: 'mounika',
-		pwd: 'admin'
+		pwd: 'admin',
+		userId: '8143pp'
 	},
 	details: {
 		ipAddr: '192.168.0.1',
@@ -22,18 +23,30 @@ var database = {
 bcrypt.hash(database.loginData.pwd, null, null, (err, hash) => {
 	database.loginData.pwd = hash;
 });
-//`
-
-var foo = 'dgchvd';
+//
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/posts', (req, res) => {
-	res.send(foo);
-});
+function validateAuthentication(req, res, next) {
+	if(!req.header('authorization')) {
+		return res.status(401).send({message: 'Unauthorized. Missing Auth Header'});
+	}
 
-app.get('/details', (req, res) => {
+	var token = req.header('authorization').split(' ')[1];
+	var payload = jwt.decode(token, '123');
+
+	if(!payload) {
+		return res.status(401).send({message: 'Unauthorized. Auth Header Invalid'});
+	}
+
+	req.userId = payload.sub;
+
+	next();
+}
+
+app.get('/details', validateAuthentication, (req, res) => {
+	console.log(req.userId);
 	res.send(database.details);
 });
 
@@ -41,17 +54,25 @@ app.post('/login', (req, res) => {
 	var userData = req.body;
 
 	bcrypt.compare(userData.pwd, database.loginData.pwd, (err, matched) => {
-		if(!matched) {
+		if(!matched || userData.userName !== database.loginData.userName) {
 			return res.status(401).send({message: 'Email or Password invalid'});
 		}
-		var payload = {};
+		var payload = {sub: database.loginData.userId};
 
 		var token = jwt.encode(payload, '123');
 
-		console.log(token);
-
 		res.status(200).send({token: token});
 	});
+});
+
+app.post('/updateDetails', (req, res) => {
+	var detailsData = req.body;
+
+	// update details to backend
+	database.details.ipAddr = detailsData.details.ipAddr;
+	database.details.subnet = detailsData.details.subnet;
+	database.details.networkGateway = detailsData.details.networkGateway;
+
 });
 
 app.listen(3000);

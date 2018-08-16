@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +7,5 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my client';
-
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit() {
-  	this.apiService.getMsg();
-  }
+  constructor(private authService: AuthService) {}
 }

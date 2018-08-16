@@ -1,8 +1,15 @@
 <mat-toolbar>
-	Power Puck
+	<button mat-button routerLink="/"><h4>Power Puck</h4></button>
 	<span style="flex: 1 1 auto"></span>
-	<button mat-button routerLink="/login">Login</button>
-	<button mat-button routerLink="/details">Details</button>
+
+	<div *ngIf="authService.isAuthenticated; then thenBlock else elseBlock"></div>
+	<ng-template #thenBlock>
+		<button mat-button routerLink="/login" (click)="authService.logout()">Logout</button>
+		<button mat-button routerLink="/details">Details</button>
+	</ng-template>
+	<ng-template #elseBlock>
+		<button mat-button routerLink="/login">Login</button>
+	</ng-template>
 </mat-toolbar>
 <div>
 	<router-outlet></router-outlet>

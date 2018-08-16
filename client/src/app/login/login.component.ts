@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'pp-login',
@@ -8,10 +9,14 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
   loginData = {}
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}  
+
+ //  navigateToDetails() {
+	// this.router.navigate(['/details']);
+ //  }
 
   validateAuthentication() {
-    console.log(this.loginData);
     this.authService.loginUser(this.loginData);
+    localStorage.getItem('token');
   }
 }

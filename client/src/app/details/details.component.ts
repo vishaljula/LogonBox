@@ -12,4 +12,10 @@ export class DetailsComponent {
   ngOnInit() {
   	this.apiService.getDetails();
   }
+
+  updateDetails() {
+  	this.apiService.updateDetails({
+  		details: this.apiService.details
+  	});
+  }
 }
