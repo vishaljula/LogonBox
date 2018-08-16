@@ -20,8 +20,11 @@ export class AuthService{
 	}
 
 	loginUser(loginData) {
-		return this.http.post<any>('http://localhost:3000/login', loginData).subscribe(res => {
-			localStorage.setItem(this.CONST_TOKEN, res.token);
-		});
+		return new Promise((resolveHandler, rejectHandler) => {
+  			this.http.post<any>('http://localhost:3000/login', loginData).subscribe(res => {
+				localStorage.setItem(this.CONST_TOKEN, res.token);
+				resolveHandler();
+			});
+  		});
 	}
 }

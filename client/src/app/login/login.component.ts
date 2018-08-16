@@ -11,12 +11,14 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}  
 
- //  navigateToDetails() {
-	// this.router.navigate(['/details']);
- //  }
+  navigateToDetails() {
+	this.router.navigate(['/details']);
+  }
 
   validateAuthentication() {
-    this.authService.loginUser(this.loginData);
+    this.authService.loginUser(this.loginData).then(function() {
+    	this.navigateToDetails();
+    }.bind(this));
     localStorage.getItem('token');
   }
 }
