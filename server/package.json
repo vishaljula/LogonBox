@@ -1,0 +1,17 @@
+{
+  "name": "power-puck",
+  "version": "1.0.0",
+  "description": "power-puck backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mounika Gangula",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1"
+  }
+}
